@@ -3,388 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>機能詳細 - Discord Spam Blocker</title>
-    <meta name="description" content="Discord Spam Blockerの詳細な機能一覧。スパム対策、BOT制御、セキュリティ機能など、包括的なDiscordサーバー保護機能をご紹介します。">
-    <meta name="keywords" content="Discord,スパム対策,BOT,自動削除,セキュリティ,Discord BOT,スパムブロッカー,Discord サーバー,保護,機能,フィルター">
-    <meta name="author" content="Discord Spam Blocker">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="ja">
-    <meta name="revisit-after" content="7 days">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://discord-spam-blocker.com/features.html">
-    <meta property="og:title" content="機能詳細 - Discord Spam Blocker">
-    <meta property="og:description" content="Discord Spam Blockerの詳細な機能一覧。スパム対策、BOT制御、セキュリティ機能など、包括的なDiscordサーバー保護機能をご紹介します。">
-    <meta property="og:image" content="https://discord-spam-blocker.com/images/og-image.jpg">
-    <meta property="og:site_name" content="Discord Spam Blocker">
-    <meta property="og:locale" content="ja_JP">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://discord-spam-blocker.com/features.html">
-    <meta property="twitter:title" content="機能詳細 - Discord Spam Blocker">
-    <meta property="twitter:description" content="Discord Spam Blockerの詳細な機能一覧。スパム対策、BOT制御、セキュリティ機能など、包括的なDiscordサーバー保護機能をご紹介します。">
-    <meta property="twitter:image" content="https://discord-spam-blocker.com/images/og-image.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://discord-spam-blocker.com/features.html">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <title>機能 — Discord Spam Blocker</title>
+    <meta name="description" content="スパム検知、ハニーポット、アンチニューク、緊急ロックダウンの説明。">
+    <link rel="canonical" href="https://coffin299.github.io/discord-bot-spam-blocker/features.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-shield-alt"></i>
-                <span>Discord Spam Blocker</span>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">ホーム</a>
-                <a href="features.html" class="nav-link active">機能</a>
-                <a href="setup.html" class="nav-link">セットアップ</a>
-                <a href="commands.html" class="nav-link">コマンド</a>
-                <a href="https://github.com/your-username/discord-bot-spam-blocker" class="nav-link" target="_blank">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+    <header class="site-header">
+        <div class="container nav">
+            <a class="brand" href="index.html">Discord Spam Blocker</a>
+            <ul class="nav-links">
+                <li><a href="index.html">ホーム</a></li>
+                <li><a class="active" href="features.html">機能</a></li>
+                <li><a href="setup.html">セットアップ</a></li>
+                <li><a href="commands.html">コマンド</a></li>
+                <li><a href="https://github.com/coffin299/discord-bot-spam-blocker" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="page-hero">
-        <div class="container">
-            <div class="page-hero-content">
-                <h1 class="page-title">機能詳細</h1>
-                <p class="page-subtitle">Discordサーバーを包括的に保護する豊富な機能</p>
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1>機能</h1>
+                <p>実装されている保護機能の概要です。音楽再生やLLM機能はありません。</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Core Features -->
-    <section class="core-features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">コア機能</h2>
-                <p class="section-subtitle">Discordサーバーの安全を守る基本機能</p>
+        <section class="section">
+            <div class="container">
+                <h2>スパムブロック</h2>
+                <p class="sub"><code class="inline">enable_spam_filter</code> などで個別に切り替えできます。</p>
+                <ul class="feature-list">
+                    <li>
+                        <h3>BOT許可リスト</h3>
+                        <p><code class="inline">allowed_bots</code> が空なら全BOT許可。IDがあるときだけリスト外を削除／参加キックします。</p>
+                    </li>
+                    <li>
+                        <h3>リンク・招待・NGワード</h3>
+                        <p>Discord招待、疑わしいURL（2026向けパターン）、詐欺定型フレーズを検知して削除します。</p>
+                    </li>
+                    <li>
+                        <h3>メンション・絵文字・大文字</h3>
+                        <p>マスメンションや過度なメンション／絵文字／英字大文字を制限できます。繰り返し文字ブロックは入れていません。</p>
+                    </li>
+                    <li>
+                        <h3>監視範囲</h3>
+                        <p>サーバー・チャンネルを絞れます。空なら参加ギルド／全チャンネルが対象です。</p>
+                    </li>
+                </ul>
             </div>
-            <div class="features-grid">
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3 class="feature-title">BOT制御システム</h3>
-                    <p class="feature-description">
-                        許可されたBOTのみが投稿できるよう制御。未許可のBOTの投稿は自動的に削除されます。
-                    </p>
-                    <ul class="feature-list">
-                        <li>許可リストベースのBOT制御</li>
-                        <li>リアルタイム投稿監視</li>
-                        <li>自動削除機能</li>
-                        <li>管理者権限の尊重</li>
-                    </ul>
-                </div>
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3 class="feature-title">チャンネル監視</h3>
-                    <p class="feature-description">
-                        特定のチャンネルのみを監視対象に設定可能。必要な場所だけを保護できます。
-                    </p>
-                    <ul class="feature-list">
-                        <li>選択的チャンネル監視</li>
-                        <li>サーバー全体監視オプション</li>
-                        <li>動的チャンネル追加</li>
-                        <li>監視除外設定</li>
-                    </ul>
-                </div>
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <h3 class="feature-title">権限管理</h3>
-                    <p class="feature-description">
-                        管理者権限を持つユーザーは常に投稿可能。権限のあるユーザーを制限しません。
-                    </p>
-                    <ul class="feature-list">
-                        <li>管理者権限の自動認識</li>
-                        <li>ホワイトリストユーザー</li>
-                        <li>権限ベースの制御</li>
-                        <li>柔軟な権限設定</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Advanced Features -->
-    <section class="advanced-features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">高度な機能</h2>
-                <p class="section-subtitle">より強力なスパム対策とセキュリティ機能</p>
+        <section class="section">
+            <div class="container">
+                <h2>ハニーポット</h2>
+                <p class="sub">ハックされたユーザーが罠チャンネルに書き込む前提。既定はKICKです。</p>
+                <ul class="feature-list">
+                    <li>
+                        <h3>即時処罰</h3>
+                        <p>除外リスト外の投稿1通で作動。理由欄は「ハニーポット作動」。</p>
+                    </li>
+                    <li>
+                        <h3>再加入ループ対策</h3>
+                        <p><code class="inline">max_kick_before_ban</code> 回までKICKを許容し、超過でBANします。</p>
+                    </li>
+                    <li>
+                        <h3>メッセージ掃除</h3>
+                        <p>対象ユーザーの既存メッセージを可能な範囲で削除します。</p>
+                    </li>
+                    <li>
+                        <h3>除外</h3>
+                        <p>admin_ids / whitelisted_users / allowed_bots / honeypot.whitelist_ids と自BOT。</p>
+                    </li>
+                </ul>
             </div>
-            <div class="features-grid">
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <h3 class="feature-title">リンクフィルタリング</h3>
-                    <p class="feature-description">
-                        疑わしいリンクや短縮URLを自動検出・ブロックします。
-                    </p>
-                    <ul class="feature-list">
-                        <li>Discord招待リンクのブロック</li>
-                        <li>短縮URLサービスの検出</li>
-                        <li>フィッシングサイトのブロック</li>
-                        <li>カスタムリンクパターン設定</li>
-                    </ul>
-                </div>
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <h3 class="feature-title">スパム検出</h3>
-                    <p class="feature-description">
-                        過度な絵文字、大文字、繰り返し文字などのスパムパターンを検出します。
-                    </p>
-                    <ul class="feature-list">
-                        <li>過度な絵文字の検出</li>
-                        <li>大文字の割合チェック</li>
-                        <li>繰り返し文字の検出</li>
-                        <li>@everyone/@hereメンション制限</li>
-                    </ul>
-                </div>
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-filter"></i>
-                    </div>
-                    <h3 class="feature-title">カスタムフィルター</h3>
-                    <p class="feature-description">
-                        独自のNGワードやパターンを設定して、より細かい制御が可能です。
-                    </p>
-                    <ul class="feature-list">
-                        <li>カスタムNGワード設定</li>
-                        <li>正規表現パターン対応</li>
-                        <li>埋め込みメッセージの検索</li>
-                        <li>動的フィルター更新</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Configuration Features -->
-    <section class="config-features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">設定・管理機能</h2>
-                <p class="section-subtitle">簡単で柔軟な設定管理</p>
+        <section class="section">
+            <div class="container">
+                <h2>アンチニュークとロックダウン</h2>
+                <p class="sub">破壊行為の短期バーストを検知します。</p>
+                <ul class="feature-list">
+                    <li>
+                        <h3>検知対象</h3>
+                        <p>大量BAN／キック、チャンネル作成・削除、ロール削除、Webhook更新。</p>
+                    </li>
+                    <li>
+                        <h3>隔離</h3>
+                        <p>実行者をタイムアウト、または危険ロールの剥奪（設定で選択）。</p>
+                    </li>
+                    <li>
+                        <h3>緊急ロックダウン</h3>
+                        <p><code class="inline">nuke_lockdown_enabled</code> が true のときのみ。@everyone の送信等を一時制限し、完了後に admin_ids へDMします。</p>
+                    </li>
+                    <li>
+                        <h3>操作権限</h3>
+                        <p>ロックダウン開始・解除は Discord管理者ではなく <code class="inline">admin_ids</code> のみです。</p>
+                    </li>
+                </ul>
+                <div class="note">ロックダウンは強力です。本番ではテスト後に有効化してください。既定はオフです。</div>
             </div>
-            <div class="features-grid">
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3 class="feature-title">動的設定変更</h3>
-                    <p class="feature-description">
-                        コマンドによる動的な設定変更。サーバーを再起動することなく設定を更新できます。
-                    </p>
-                    <ul class="feature-list">
-                        <li>リアルタイム設定更新</li>
-                        <li>コマンドベースの管理</li>
-                        <li>設定の即座反映</li>
-                        <li>バックアップ機能</li>
-                    </ul>
-                </div>
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3 class="feature-title">YAML設定</h3>
-                    <p class="feature-description">
-                        YAMLファイルによる直感的で分かりやすい設定管理。
-                    </p>
-                    <ul class="feature-list">
-                        <li>人間が読みやすい設定形式</li>
-                        <li>コメント機能</li>
-                        <li>設定テンプレート</li>
-                        <li>設定検証機能</li>
-                    </ul>
-                </div>
-                <div class="feature-card detailed">
-                    <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <h3 class="feature-title">通知システム</h3>
-                    <p class="feature-description">
-                        削除時の警告メッセージ表示（オプション）。何が削除されたかを透明性を持って表示。
-                    </p>
-                    <ul class="feature-list">
-                        <li>削除理由の表示</li>
-                        <li>自動削除タイマー</li>
-                        <li>ログ機能</li>
-                        <li>カスタムメッセージ</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Security Features -->
-    <section class="security-features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">セキュリティ機能</h2>
-                <p class="section-subtitle">サーバーの安全を守る高度なセキュリティ機能</p>
-            </div>
-            <div class="security-grid">
-                <div class="security-item">
-                    <div class="security-icon">
-                        <i class="fas fa-shield-virus"></i>
-                    </div>
-                    <div class="security-content">
-                        <h3>マルウェア対策</h3>
-                        <p>実行ファイルや疑わしいファイルのリンクを自動検出・ブロック</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <div class="security-icon">
-                        <i class="fas fa-user-secret"></i>
-                    </div>
-                    <div class="security-content">
-                        <h3>フィッシング対策</h3>
-                        <p>偽のDiscordサイトや認証ページのリンクを検出・ブロック</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <div class="security-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <div class="security-content">
-                        <h3>詐欺対策</h3>
-                        <p>Nitro詐欺や暗号通貨詐欺などの一般的な詐欺パターンを検出</p>
-                    </div>
-                </div>
-                <div class="security-item">
-                    <div class="security-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <div class="security-content">
-                        <h3>スパム対策</h3>
-                        <p>大量のメンションや繰り返し投稿などのスパム行為を自動検出</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Performance Features -->
-    <section class="performance-features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">パフォーマンス</h2>
-                <p class="section-subtitle">高速で効率的な動作</p>
-            </div>
-            <div class="performance-grid">
-                <div class="performance-item">
-                    <div class="performance-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>高速処理</h3>
-                    <p>リアルタイムでのメッセージ監視と即座の削除処理</p>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-icon">
-                        <i class="fas fa-memory"></i>
-                    </div>
-                    <h3>低リソース使用</h3>
-                    <p>最小限のメモリとCPU使用量で効率的に動作</p>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-icon">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                    <h3>安定動作</h3>
-                    <p>24時間365日の安定した監視と自動復旧機能</p>
-                </div>
-                <div class="performance-item">
-                    <div class="performance-icon">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </div>
-                    <h3>スケーラブル</h3>
-                    <p>大規模サーバーでも安定して動作する設計</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>今すぐDiscordサーバーを保護しましょう</h2>
-                <p>数分でセットアップ完了。無料で使用できます。</p>
-                <div class="cta-buttons">
-                    <a href="setup.html" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        セットアップガイド
-                    </a>
-                    <a href="https://github.com/your-username/discord-bot-spam-blocker" class="btn btn-secondary" target="_blank">
-                        <i class="fab fa-github"></i>
-                        GitHubでダウンロード
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Discord Spam Blocker</h3>
-                    <p>誰でも簡単にDiscord上のスパムをブロック</p>
-                </div>
-                <div class="footer-section">
-                    <h4>リンク</h4>
-                    <ul>
-                        <li><a href="index.html">ホーム</a></li>
-                        <li><a href="features.html">機能</a></li>
-                        <li><a href="setup.html">セットアップ</a></li>
-                        <li><a href="commands.html">コマンド</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>サポート</h4>
-                    <ul>
-                        <li><a href="https://github.com/your-username/discord-bot-spam-blocker/issues" target="_blank">問題報告</a></li>
-                        <li><a href="https://github.com/your-username/discord-bot-spam-blocker" target="_blank">GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Discord Spam Blocker. 自由に使用・改変できます。</p>
-            </div>
+    <footer class="site-footer">
+        <div class="container footer-row">
+            <p>© coffin299 · MIT License</p>
+            <ul class="footer-links">
+                <li><a href="setup.html">セットアップ</a></li>
+                <li><a href="commands.html">コマンド</a></li>
+            </ul>
         </div>
     </footer>
-
     <script src="script.js"></script>
 </body>
 </html>

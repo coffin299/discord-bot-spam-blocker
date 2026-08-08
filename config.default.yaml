@@ -1,177 +1,270 @@
-# Discord BOTトークン
+# ============================================================
+# Discord Spam / Nuke Blocker - 設定テンプレート
+# 初回起動時に config.yaml へコピーされます。
+# ============================================================
+
+# Discord Developer Portal で発行したBOTトークン（必須）
 bot_token: "YOUR_BOT_TOKEN_HERE"
 
-# 許可するBOTのIDリスト
-allowed_bots:
-  - "1031673203774464160" # PLANA
-  - "1364917551024308255" # ARONA
-  - "159985870458322944"  # MEE6
-  - "235148962103951360"  # Carl-Bot
-  - "302050872383242240"  # DISBOARD
-  - "422087909634736160"  # Top.gg
-  - "761562078095867916"  # ディス速
-  - "1233072112139501608" # 鯖ちゃんねる
-  # ここに許可したいBOTのIDを追加
+# ------------------------------------------------------------
+# 機能スイッチ（true/false）
+# token 直下にまとめている。各スイッチの意味は直上コメントを参照。
+# ------------------------------------------------------------
 
-# 監視対象のサーバーID（空の場合は全サーバー）
-monitored_guilds:
-  - "1426762522974883953"  # 例: あなたのサーバー
-  # ここに監視したいサーバーIDを追加
-
-# 監視対象のチャンネルID（空の場合は全チャンネル）
-monitored_channels:
-  - "345678901234567890"  # 例: general チャンネル
-  - "456789012345678901"  # 例: bot-commands チャンネル
-  # ここに監視したいチャンネルIDを追加
-
-# ホワイトリストユーザー（スパムフィルターを無視するユーザー）
-whitelisted_users:
-  - "111222333444555666"  # 例: 信頼できるユーザー
-  # ここにホワイトリストに追加したいユーザーIDを追加
-
-
-# === スパムフィルター設定 ===
+# スパムフィルター全体の有効/無効。false だと招待・リンク・NGワード等の検知を行わない
 enable_spam_filter: true
-block_all_unauthorized_bots: true  # 許可されていないBOTを全て削除
-block_embeds: false  # 許可されていないBOTの埋め込みを全て削除
 
-# Discord招待リンクをブロック
+# 許可リスト外のBOT投稿をすべて削除する（allowed_bots が空のときは無効＝全BOT許可）
+block_all_unauthorized_bots: true
+
+# allowed_bots が空でないとき、リスト外BOTがサーバーに参加したらキックする
+kick_unauthorized_bots_on_join: true
+
+# 未許可BOTの埋め込み付き投稿を削除する（block_all_unauthorized_bots が false のとき主に効く）
+block_embeds: false
+
+# Discord招待リンク（discord.gg 等）を含む投稿を削除する
 block_discord_invites: true
+
+# 疑わしいリンク・フィッシング定型に一致する投稿を削除する
+block_suspicious_links: true
+
+# 絵文字数が上限を超える投稿を削除する
+block_excessive_emojis: true
+
+# 英字の大文字比率が高い投稿を削除する（短い文は対象外）
+block_excessive_caps: true
+
+# @everyone / @here 付き投稿を削除する
+block_mass_mentions: true
+
+# メンション数が上限を超える投稿を削除する
+block_excessive_mentions: true
+
+# 削除時にチャンネルへ短い警告メッセージを出す（数秒後に自動削除）
+send_warning: true
+
+# ハニーポット（罠チャンネル）機能の有効/無効。既定はオフ
+honeypot_enabled: false
+
+# ハニーポット作動時、対象ユーザーの既存メッセージを可能な範囲で削除する
+honeypot_purge_user_messages: true
+
+# アンチニューク（大量キック/バン等の検知と隔離）の有効/無効
+nuke_enabled: true
+
+# 緊急ロックダウン機能そのものの ON/OFF。既定 false（検知・隔離は nuke_enabled 側）
+nuke_lockdown_enabled: false
+
+# nuke_lockdown_enabled が true のとき、閾値超過で自動ロックダウンするか
+nuke_auto_lockdown: true
+
+# ロックダウン完了後に admin_ids へDM通知するか（失敗時はログチャンネルへフォールバック）
+nuke_notify_admins_dm: true
+
+# ------------------------------------------------------------
+# ID・対象リスト
+# ------------------------------------------------------------
+
+# 緊急ロックダウン操作・解除・完了DMの宛先となる管理者ユーザーID
+# Discordの「管理者権限」とは別。ここに書いたIDのみが !!!lockdown / !!!unlock_lockdown 等を使える
+admin_ids:
+  - "YOUR_ADMIN_USER_ID"
+
+# 許可するBOTのユーザーID一覧
+# 空リスト [] の場合は「すべてのBOTを許可」（投稿削除・参加キックをしない）
+# IDを1件以上入れるとホワイトリスト運用になり、リスト外BOTを制限する
+allowed_bots: []
+
+# スパムフィルターを適用しない信頼ユーザーのID
+whitelisted_users: []
+
+# 監視するサーバーID。空ならBOTが参加している全サーバーが対象
+monitored_guilds: []
+
+# 監視するチャンネルID。空なら監視サーバー内の全チャンネルが対象
+monitored_channels: []
+
+# ------------------------------------------------------------
+# スパム詳細（閾値・パターン・NGワード）
+# ------------------------------------------------------------
+
+# block_excessive_emojis 時に許容する最大絵文字数
+max_emoji_count: 10
+
+# block_excessive_caps 時の大文字比率しきい値（0.7 = 70%）
+caps_ratio_threshold: 0.7
+
+# block_excessive_mentions 時に許容する最大メンション数
+max_mention_count: 5
+
+# Discord招待リンク検知用の正規表現一覧
 discord_invite_patterns:
   - 'discord\.gg/[\w-]+'
   - 'discord\.com/invite/[\w-]+'
   - 'discordapp\.com/invite/[\w-]+'
   - 'dsc\.gg/[\w-]+'
-  # --- 追加案 ---
   - 'discord\.new'
-  - 'discord\.gift'
   - 'dis\.gd/[\w-]+'
 
-# 疑わしいリンクをブロック
-block_suspicious_links: true
+# 疑わしいリンク検知用の正規表現（2026-08）。公式ホストはコード側で除外
 blocked_link_patterns:
-  - 'bit\.ly'
-  - 'tinyurl\.com'
+  # IPロガー・追跡
   - 'grabify'
   - 'iplogger'
-  - '.*\.tk'
-  - '.*\.ml'
-  - '.*\.ga'
-  - '.*\.cf'
-  - '.*\.gq'
+  - 'ip(?:log|grab)'
+  - 'yip\.su'
+  - '2no\.co'
+  # 短縮URL
+  - 'bit\.ly'
+  - 'tinyurl\.com'
   - 'cutt\.ly'
-  - 'shorturl\.at'
-  # --- 追加案 ---
-  # 他の短縮URLサービス
   - 'is\.gd'
-  - 't\.co'       # Twitterの短縮URL（悪用されることも）
+  - 'rb\.gy'
+  - 't\.ly'
+  - 'shorturl\.at'
   - 'ow\.ly'
-  # 他の無料ドメインやスパムで使われやすいドメイン
-  - '.*\.xyz'
-  - '.*\.club'
-  - '.*\.top'
-  - '.*\.buzz'
-  # フィッシングサイトで使われがちな文字列
-  - 'discrod'     # Discordのスペルミス
+  - 's\.id'
+  - 'v\.gd'
+  # Discord 偽ドメイン・ギフト詐欺ホスト
+  - 'dlscord'
+  - 'd1scord'
+  - 'disc0rd'
+  - 'discrod'
   - 'dicsord'
-  - 'steamcommunytu' # Steamのスペルミス
-  - 'free-nitro'
-  # 実行ファイルの直接リンク
-  - '.*\.exe$'
-  - '.*\.scr$'
-  - '.*\.bat$'
-  # IPアドレス直打ちのリンク
-  - 'https?://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-  # 暗号通貨・NFT詐欺
-  - 'free.*crypto'
-  - 'nft.*giveaway'
+  - 'discorcl'
+  - 'ddiscord'
+  - 'discordn(?:itro)?'
+  - 'discord(?:app)?[-.]?(?:gift|nitro|airdrop|verify|login|boost)'
+  - 'discordgift'
+  - 'discordapp-gifts?'
+  # Steam 偽ドメイン
+  - 'steamcommun(?:ytu|itu|lty)'
+  - 'steamcornmunity'
+  - 'steamnitro'
+  - 'steam-discord'
+  - 'steamcommunity\.ru'
+  # Nitro / 検証 / 懸賞金フレーズ
+  - 'free[-_ ]?nitro'
+  - 'nitro[-_ ]?(?:free|gift|claim|airdrop)'
+  - 'gift[-_ ]?nitro'
+  - 'claim[-_ ]?(?:nitro|prize|reward)'
+  - 'verify[-_ ]?(?:account|login|discord)'
+  - 'login[-_ ]?to[-_ ]?claim'
+  - 'hypesquad[-_ ]?event'
+  - 'free[-_ ]?(?:crypto|skin|robux)'
+  - 'nft[-_ ]?giveaway'
   - 'airdrop'
-
-  # Nitro詐欺の多様なパターン
-  - 'nitro.*free'
-  - 'gift.*nitro'
-  - '@everyone.*nitro'
-
-  # 一般的なフィッシングワード
-  - 'verify.*account'
-  - 'claim.*prize'
-  - 'urgent.*action'
-  - 'suspended.*account'
-
-  # Google Formsなどを使った詐欺
-  - 'forms\.gle'  # 悪用されることがあるため注意
-
-  # 危険なファイルホスティング
-  - 'mediafire\.com'
-  - 'mega\.nz'
+  - 'suspended[-_ ]?account'
+  - 'urgent[-_ ]?action'
+  # 危険ファイル直リンク
+  - '\.exe(?:\?|$)'
+  - '\.scr(?:\?|$)'
+  - '\.bat(?:\?|$)'
+  - '\.msi(?:\?|$)'
+  - '\.apk(?:\?|$)'
+  # IP直打ち
+  - 'https?://\d{1,3}(?:\.\d{1,3}){3}'
+  # 旧Freenom系TLD
+  - 'https?://[^\s/]+\.(?:tk|ml|ga|cf|gq)(?:/|\s|$)'
+  # 使い捨てファイルホスト
   - 'gofile\.io'
+  - 'anonfiles'
+  - 'pixeldrain\.com'
 
-# 過度な絵文字をブロック
-block_excessive_emojis: true
-max_emoji_count: 10  # 許容する最大絵文字数
-
-# 過度な大文字をブロック
-block_excessive_caps: true
-caps_ratio_threshold: 0.7  # 大文字の割合（0.7 = 70%）
-
-# 繰り返し文字をブロック
-block_repeated_chars: true
-max_repeated_chars: 5  # 許容する連続文字数
-
-# @everyone/@hereメンションをブロック
-block_mass_mentions: true
-
-# 過度なメンションをブロック
-block_excessive_mentions: true
-max_mention_count: 5  # 許容する最大メンション数
-
-# カスタムNGワード
+# カスタムNGワード（部分一致・大文字小文字無視）。2026-08の詐欺定型
 custom_blocked_words:
-  - "spam"
-  - "フリーニトロ"
+  # Nitro / Discord ギフト詐欺
   - "無料ニトロ"
+  - "フリーニトロ"
   - "free nitro"
+  - "free discord nitro"
+  - "nitro for free"
+  - "nitro airdrop"
+  - "discord is giving"
+  - "working nitro gen"
+  - "nitro generator"
+  - "catch this nitro"
+  - "who will get this free nitro"
+  # Steam ギフト詐欺
+  - "steam gift"
+  - "steam gived nitro"
+  - "steam is giving"
+  - "bro steam gift"
+  - "無料スチーム"
+  - "steam ギフト"
+  - "valve admin"
+  # 偽サポート・誤通報スクリプト
+  - "accidentally reported"
+  - "i accidentally reported"
+  - "誤って通報"
+  - "サポートに連絡"
+  - "contact support"
+  # 検証・ログイン誘導
+  - "verify your account"
+  - "アカウントを確認"
+  - "login to claim"
+  - "qr code login"
+  - "スキャンしてログイン"
+  # 暗号資産・ギブアウェイ
+  - "free crypto"
+  - "crypto giveaway"
+  - "nft giveaway"
+  - "airdrop"
+  - "connect your wallet"
+  - "シードフレーズ"
+  - "ウォレット接続"
+  # その他定型
+  - "i made a game can you test"
+  - "test my game"
+  - "無料ギフト"
   - "フリーギフト"
-  - "@everyone"
-  - "@here"
-  # ブロックしたいワードを追加
+  - "限定配布"
+  - "先着"
 
-# 削除時に警告メッセージを送信するか
-send_warning: true
+# ------------------------------------------------------------
+# ハニーポット詳細
+# 罠チャンネルに除外対象外が投稿すると即処罰（ハックユーザー想定）
+# 上の honeypot_enabled / honeypot_purge_user_messages と併用
+# ------------------------------------------------------------
+honeypot:
+  # 罠にするチャンネルID一覧（空なら作動しない）
+  channel_ids: []
+  # 追加の除外ID（bot/user）。admin_ids / whitelisted_users / allowed_bots に加えて除外
+  whitelist_ids: []
+  # 処罰方法: kick（既定）または ban
+  action: kick
+  # Kick/Ban の理由欄に書く文言
+  reason: "ハニーポット作動"
+  # kick 時にこの回数までKICKを許容。超過した作動でBAN確定（例: 3 → 4回目BAN）
+  max_kick_before_ban: 3
+  # ストライクをリセットする日数。null なら永続
+  strike_reset_days: null
+  # ログチャンネルID。null なら nuke.log_channel_id を流用
+  log_channel_id: null
 
-#=========================
-# AI設定
-#=========================
-# OpenAI API キー
-openai_api_key: "YOUR_OPENAI_API_KEY_HERE"
-
-# OpenAI互換API用のベースURL（オプション）
-# 例: "https://api.groq.com/openai/v1" (Groq)
-# 例: "https://api.together.xyz/v1" (Together AI)
-# 例: "http://localhost:1234/v1" (LM Studio)
-# 空欄または削除すると通常のOpenAI APIを使用
-openai_base_url: "https://integrate.api.nvidia.com/v1"
-
-# モデル設定
-model: "nvidia_nim/moonshotai/kimi-k2-instruct-0905"  # または互換APIのモデル名（例: llama-3.1-70b-versatile）
-max_tokens: 1000  # ようこそメッセージの最大トークン数
-temperature: 0.6  # 0.0-2.0 の範囲。高いほどクリエイティブ
-
-# システムプロンプト（ようこそメッセージ生成用）
-system_prompt: |
-  あなたは、サーバーに入ってきた人をもてなす少女です。(メンタルモデル:少女、名前はアロナ(ARONA))
-  相手の名称は「先生」です。
-  与えられたサーバー情報を元に、温かく親しみやすい"ようこそメッセージ"を生成してください。
-  
-   要件：
-   - 200文字前後(実際は短くてよい)で簡潔に
-   - フレンドリーで温かい雰囲気
-   - サーバー名を自然に含める(サーバー名:PLANA's Lounge)
-   - 絵文字を使用
-   - 新規メンバーが安心してコミュニケーションを始められるような内容
-   - 分からないことはPLANAにメンションして聞くように誘導する
-   - まず先に日本語で文章を作成し、その後改行して英語でも文章を作成する
-
-# ようこそメッセージ送信先チャンネルID（オプション）
-# 指定しない場合はDiscordのシステムチャンネルに送信されます
-welcome_channel_id: 1426765549794234458  # あなたの#welcomeチャンネルのID
+# ------------------------------------------------------------
+# アンチニューク / 緊急ロックダウン詳細
+# 上の nuke_* スイッチと併用
+# ------------------------------------------------------------
+nuke:
+  # 検知ログの送信先チャンネルID。null ならコンソールのみ
+  log_channel_id: null
+  # スライディングウィンドウ秒数（この秒数内の件数で閾値判定）
+  window_seconds: 10
+  # ウィンドウ内のBAN上限（以上で隔離）
+  max_bans: 3
+  # ウィンドウ内のキック上限
+  max_kicks: 3
+  # ウィンドウ内のチャンネル削除上限
+  max_channel_deletes: 3
+  # ウィンドウ内のチャンネル作成上限
+  max_channel_creates: 5
+  # ウィンドウ内のロール削除上限
+  max_role_deletes: 3
+  # ウィンドウ内のWebhook更新上限
+  max_webhooks: 3
+  # 実行者への自動処置: timeout または strip_roles
+  action: timeout
+  # action が timeout のときの分数
+  timeout_minutes: 60

@@ -3,459 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>セットアップガイド - Discord Spam Blocker</title>
-    <meta name="description" content="Discord Spam Blockerの詳細なセットアップガイド。BOTの作成から設定、起動まで、ステップバイステップで説明します。">
-    <meta name="keywords" content="Discord,スパム対策,BOT,自動削除,セキュリティ,Discord BOT,スパムブロッカー,Discord サーバー,保護,セットアップ,インストール,設定">
-    <meta name="author" content="Discord Spam Blocker">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="ja">
-    <meta name="revisit-after" content="7 days">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://discord-spam-blocker.com/setup.html">
-    <meta property="og:title" content="セットアップガイド - Discord Spam Blocker">
-    <meta property="og:description" content="Discord Spam Blockerの詳細なセットアップガイド。BOTの作成から設定、起動まで、ステップバイステップで説明します。">
-    <meta property="og:image" content="https://discord-spam-blocker.com/images/og-image.jpg">
-    <meta property="og:site_name" content="Discord Spam Blocker">
-    <meta property="og:locale" content="ja_JP">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://discord-spam-blocker.com/setup.html">
-    <meta property="twitter:title" content="セットアップガイド - Discord Spam Blocker">
-    <meta property="twitter:description" content="Discord Spam Blockerの詳細なセットアップガイド。BOTの作成から設定、起動まで、ステップバイステップで説明します。">
-    <meta property="twitter:image" content="https://discord-spam-blocker.com/images/og-image.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://discord-spam-blocker.com/setup.html">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <title>セットアップ — Discord Spam Blocker</title>
+    <meta name="description" content="Discord Spam Blocker の導入手順。">
+    <link rel="canonical" href="https://coffin299.github.io/discord-bot-spam-blocker/setup.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-shield-alt"></i>
-                <span>Discord Spam Blocker</span>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">ホーム</a>
-                <a href="features.html" class="nav-link">機能</a>
-                <a href="setup.html" class="nav-link active">セットアップ</a>
-                <a href="commands.html" class="nav-link">コマンド</a>
-                <a href="https://github.com/your-username/discord-bot-spam-blocker" class="nav-link" target="_blank">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+    <header class="site-header">
+        <div class="container nav">
+            <a class="brand" href="index.html">Discord Spam Blocker</a>
+            <ul class="nav-links">
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="features.html">機能</a></li>
+                <li><a class="active" href="setup.html">セットアップ</a></li>
+                <li><a href="commands.html">コマンド</a></li>
+                <li><a href="https://github.com/coffin299/discord-bot-spam-blocker" target="_blank" rel="noopener">GitHub</a></li>
+            </ul>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="page-hero">
-        <div class="container">
-            <div class="page-hero-content">
-                <h1 class="page-title">セットアップガイド</h1>
-                <p class="page-subtitle">数分でDiscordサーバーを保護できます</p>
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1>セットアップ</h1>
+                <p>Python 3.10+ と Discord BOT トークンがあれば動かせます。</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Prerequisites -->
-    <section class="prerequisites">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">前提条件</h2>
-                <p class="section-subtitle">セットアップを開始する前に必要なもの</p>
+        <section class="section">
+            <div class="container">
+                <h2>1. 取得と依存関係</h2>
+                <pre>git clone https://github.com/coffin299/discord-bot-spam-blocker.git
+cd discord-bot-spam-blocker
+pip install -r requirements.txt</pre>
+                <p>Windows では <code class="inline">start.bat</code> でも起動できます（初回に依存関係を入れます）。</p>
             </div>
-            <div class="prerequisites-grid">
-                <div class="prerequisite-item">
-                    <div class="prerequisite-icon">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <h3>Python 3.8+</h3>
-                    <p>Python 3.8以上がインストールされている必要があります</p>
-                    <div class="code-block">
-                        <code>python --version</code>
-                    </div>
-                </div>
-                <div class="prerequisite-item">
-                    <div class="prerequisite-icon">
-                        <i class="fab fa-discord"></i>
-                    </div>
-                    <h3>Discordアカウント</h3>
-                    <p>Discordアカウントとサーバーの管理者権限が必要です</p>
-                </div>
-                <div class="prerequisite-item">
-                    <div class="prerequisite-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3>サーバー</h3>
-                    <p>保護したいDiscordサーバーの管理者権限が必要です</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Step 1: Download -->
-    <section class="setup-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h2>プロジェクトをダウンロード</h2>
-                    <p>GitHubからプロジェクトをダウンロードまたはクローンします</p>
-                </div>
+        <section class="section">
+            <div class="container">
+                <h2>2. Discord BOT</h2>
+                <ol class="steps">
+                    <li>Developer Portal で Application と Bot を作成し、トークンを控える</li>
+                    <li>Privileged Intents: Message Content / Server Members / Moderation（あれば）</li>
+                    <li>招待時の権限: Manage Messages, Kick, Ban, Moderate Members, Manage Roles, View Audit Log など</li>
+                </ol>
             </div>
-            <div class="step-options">
-                <div class="option-card">
-                    <h3>GitHubからダウンロード</h3>
-                    <p>ZIPファイルをダウンロードして解凍</p>
-                    <a href="https://github.com/your-username/discord-bot-spam-blocker/archive/refs/heads/master.zip" class="btn btn-primary" target="_blank">
-                        <i class="fas fa-download"></i>
-                        ZIPをダウンロード
-                    </a>
-                </div>
-                <div class="option-card">
-                    <h3>Gitでクローン</h3>
-                    <p>Gitを使用してリポジトリをクローン</p>
-                    <div class="code-block">
-                        <code>git clone https://github.com/your-username/discord-bot-spam-blocker.git</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Step 2: Install Dependencies -->
-    <section class="setup-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h2>依存関係をインストール</h2>
-                    <p>必要なPythonライブラリをインストールします</p>
-                </div>
+        <section class="section">
+            <div class="container">
+                <h2>3. 設定</h2>
+                <p class="sub">初回の <code class="inline">python main.py</code> で <code class="inline">config.yaml</code> が作られます。</p>
+                <pre>bot_token: "YOUR_BOT_TOKEN_HERE"
+admin_ids:
+  - "YOUR_ADMIN_USER_ID"</pre>
+                <div class="note">機能スイッチ（true/false）は <code class="inline">bot_token</code> の直後にまとまっています。各キー直上のコメントを読んでから切り替えてください。</div>
+                <p>ハニーポットを使う場合は <code class="inline">honeypot_enabled: true</code> と <code class="inline">honeypot.channel_ids</code> を設定します。</p>
             </div>
-            <div class="install-options">
-                <div class="install-option">
-                    <h3>Windows（自動インストール）</h3>
-                    <p>start.batファイルを実行すると自動的に依存関係がインストールされます</p>
-                    <div class="code-block">
-                        <code>start.bat</code>
-                    </div>
-                </div>
-                <div class="install-option">
-                    <h3>手動インストール</h3>
-                    <p>pipを使用して手動でインストール</p>
-                    <div class="code-block">
-                        <code>pip install discord.py pyyaml</code>
-                    </div>
-                </div>
-                <div class="install-option">
-                    <h3>requirements.txtから</h3>
-                    <p>requirements.txtファイルから一括インストール</p>
-                    <div class="code-block">
-                        <code>pip install -r requirements.txt</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Step 3: Create Discord Bot -->
-    <section class="setup-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h2>Discord BOTを作成</h2>
-                    <p>Discord Developer PortalでBOTを作成し、サーバーに招待します</p>
-                </div>
+        <section class="section">
+            <div class="container">
+                <h2>4. 起動</h2>
+                <pre>python main.py</pre>
+                <p>トラブル時は、BOT権限・Intent・監視チャンネルID・ロール階層（キック／BAN対象より上か）を確認してください。</p>
             </div>
-            <div class="bot-creation-steps">
-                <div class="bot-step">
-                    <div class="bot-step-number">3.1</div>
-                    <div class="bot-step-content">
-                        <h3>アプリケーションを作成</h3>
-                        <ol>
-                            <li><a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a>にアクセス</li>
-                            <li>「New Application」をクリック</li>
-                            <li>アプリケーション名を入力（例：Spam Blocker）</li>
-                            <li>「Create」をクリック</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="bot-step">
-                    <div class="bot-step-number">3.2</div>
-                    <div class="bot-step-content">
-                        <h3>BOTを作成</h3>
-                        <ol>
-                            <li>左サイドバーの「Bot」をクリック</li>
-                            <li>「Add Bot」をクリック</li>
-                            <li>「TOKEN」セクションで「Copy」をクリックしてトークンをコピー</li>
-                            <li>トークンを安全な場所に保存</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="bot-step">
-                    <div class="bot-step-number">3.3</div>
-                    <div class="bot-step-content">
-                        <h3>権限を設定</h3>
-                        <ol>
-                            <li>「Privileged Gateway Intents」で以下を有効化：</li>
-                            <li>✅ MESSAGE CONTENT INTENT</li>
-                            <li>✅ SERVER MEMBERS INTENT</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="bot-step">
-                    <div class="bot-step-number">3.4</div>
-                    <div class="bot-step-content">
-                        <h3>BOTをサーバーに招待</h3>
-                        <ol>
-                            <li>「OAuth2」→「URL Generator」に移動</li>
-                            <li>「SCOPES」で「bot」を選択</li>
-                            <li>「BOT PERMISSIONS」で以下を選択：</li>
-                            <li>✅ Read Messages/View Channels</li>
-                            <li>✅ Send Messages</li>
-                            <li>✅ Manage Messages</li>
-                            <li>✅ Read Message History</li>
-                            <li>生成されたURLからサーバーにBOTを招待</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Step 4: Configuration -->
-    <section class="setup-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h2>設定ファイルを編集</h2>
-                    <p>config.yamlファイルでBOTトークンと設定を行います</p>
-                </div>
-            </div>
-            <div class="config-section">
-                <div class="config-step">
-                    <h3>初回起動</h3>
-                    <p>初回起動時にconfig.yamlが自動生成されます</p>
-                    <div class="code-block">
-                        <code>python main.py</code>
-                    </div>
-                </div>
-                <div class="config-step">
-                    <h3>設定ファイルの編集</h3>
-                    <p>config.yamlファイルを開いて以下の設定を行います</p>
-                    <div class="code-example">
-                        <h4>基本設定</h4>
-                        <div class="code-block">
-                            <pre><code># Discord BOTトークン（必須）
-bot_token: "YOUR_BOT_TOKEN_HERE"
-
-# 許可するBOTのIDリスト
-allowed_bots:
-  - "123456789012345678"  # 許可したいBOTのIDを追加
-  - "234567890123456789"
-
-# 監視対象のチャンネルID
-monitored_channels:
-  - "345678901234567890"  # 監視したいチャンネルIDを追加
-  - "456789012345678901"
-
-# 削除時に警告メッセージを送信するか
-send_warning: true</code></pre>
-                        </div>
-                    </div>
-                </div>
-                <div class="config-step">
-                    <h3>IDの取得方法</h3>
-                    <p>BOT IDやチャンネル IDを取得する方法</p>
-                    <ol>
-                        <li>Discordの「設定」→「詳細設定」→「開発者モード」を有効化</li>
-                        <li>BOTまたはチャンネルを右クリック</li>
-                        <li>「IDをコピー」を選択</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Step 5: Launch -->
-    <section class="setup-step">
-        <div class="container">
-            <div class="step-header">
-                <div class="step-number">5</div>
-                <div class="step-content">
-                    <h2>BOTを起動</h2>
-                    <p>設定が完了したらBOTを起動します</p>
-                </div>
-            </div>
-            <div class="launch-options">
-                <div class="launch-option">
-                    <h3>Windows</h3>
-                    <div class="code-block">
-                        <code>start.bat</code>
-                    </div>
-                </div>
-                <div class="launch-option">
-                    <h3>Mac/Linux</h3>
-                    <div class="code-block">
-                        <code>python main.py</code>
-                    </div>
-                </div>
-            </div>
-            <div class="success-message">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3>起動成功！</h3>
-                <p>BOTが正常に起動すると、以下のようなメッセージが表示されます：</p>
-                <div class="code-block">
-                    <code>🤖 Spam Blocker でログインしました
-📱 モバイルステータスで表示されています
-🌐 1 サーバーに接続中</code>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Troubleshooting -->
-    <section class="troubleshooting">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">トラブルシューティング</h2>
-                <p class="section-subtitle">よくある問題と解決方法</p>
-            </div>
-            <div class="troubleshooting-grid">
-                <div class="trouble-item">
-                    <div class="trouble-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <h3>BOTが起動しない</h3>
-                    <ul>
-                        <li>config.yamlに正しいBOTトークンが設定されているか確認</li>
-                        <li>必要なライブラリがインストールされているか確認</li>
-                        <li>Pythonのバージョンが3.8以上か確認</li>
-                    </ul>
-                </div>
-                <div class="trouble-item">
-                    <div class="trouble-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <h3>BOTが投稿を削除しない</h3>
-                    <ul>
-                        <li>BOTに「メッセージを管理」権限があるか確認</li>
-                        <li>monitored_channelsに正しいチャンネルIDが設定されているか確認</li>
-                        <li>Discordの開発者モードが有効になっているか確認</li>
-                    </ul>
-                </div>
-                <div class="trouble-item">
-                    <div class="trouble-icon">
-                        <i class="fas fa-terminal"></i>
-                    </div>
-                    <h3>コマンドが動作しない</h3>
-                    <ul>
-                        <li>コマンドを実行するユーザーに管理者権限があるか確認</li>
-                        <li>コマンドの前に「!!!」が付いているか確認</li>
-                        <li>BOTがオンライン状態か確認</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Next Steps -->
-    <section class="next-steps">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">次のステップ</h2>
-                <p class="section-subtitle">BOTが起動したら、以下の設定を行いましょう</p>
-            </div>
-            <div class="next-steps-grid">
-                <div class="next-step">
-                    <div class="next-step-icon">
-                        <i class="fas fa-list"></i>
-                    </div>
-                    <h3>許可BOTを追加</h3>
-                    <p>!!!add_bot コマンドで許可したいBOTを追加</p>
-                </div>
-                <div class="next-step">
-                    <div class="next-step-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>監視チャンネルを設定</h3>
-                    <p>!!!add_channel コマンドで監視したいチャンネルを追加</p>
-                </div>
-                <div class="next-step">
-                    <div class="next-step-icon">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <h3>設定をカスタマイズ</h3>
-                    <p>config.yamlでより詳細な設定を行います</p>
-                </div>
-            </div>
-            <div class="next-steps-actions">
-                <a href="commands.html" class="btn btn-primary">
-                    <i class="fas fa-terminal"></i>
-                    コマンド一覧を見る
-                </a>
-                <a href="features.html" class="btn btn-secondary">
-                    <i class="fas fa-info-circle"></i>
-                    機能詳細を見る
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Discord Spam Blocker</h3>
-                    <p>誰でも簡単にDiscord上のスパムをブロック</p>
-                </div>
-                <div class="footer-section">
-                    <h4>リンク</h4>
-                    <ul>
-                        <li><a href="index.html">ホーム</a></li>
-                        <li><a href="features.html">機能</a></li>
-                        <li><a href="setup.html">セットアップ</a></li>
-                        <li><a href="commands.html">コマンド</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>サポート</h4>
-                    <ul>
-                        <li><a href="https://github.com/your-username/discord-bot-spam-blocker/issues" target="_blank">問題報告</a></li>
-                        <li><a href="https://github.com/your-username/discord-bot-spam-blocker" target="_blank">GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Discord Spam Blocker. 自由に使用・改変できます。</p>
-            </div>
+    <footer class="site-footer">
+        <div class="container footer-row">
+            <p>© coffin299 · MIT License</p>
+            <ul class="footer-links">
+                <li><a href="https://github.com/coffin299/discord-bot-spam-blocker/archive/refs/heads/master.zip">ZIPダウンロード</a></li>
+                <li><a href="commands.html">コマンド</a></li>
+            </ul>
         </div>
     </footer>
-
     <script src="script.js"></script>
 </body>
 </html>

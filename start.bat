@@ -1,4 +1,4 @@
-ECHO ARONA STARTER
+ECHO Spam Blocker STARTER
 
 set VENV_DIR=.venv
 
@@ -18,6 +18,6 @@ call "%VENV_DIR%\Scripts\activate.bat"
 ECHO Installing/Updating required packages...
 python -m pip install -U -r requirements.txt
 
-ECHO Starting the ARONA...
+ECHO Starting Spam Blocker...
 python main.py
 pause
