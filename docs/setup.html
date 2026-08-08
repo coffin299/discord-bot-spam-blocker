@@ -49,7 +49,7 @@ pip install -r requirements.txt</pre>
                 <ol class="steps">
                     <li>Developer Portal で Application と Bot を作成し、トークンを控える</li>
                     <li>Privileged Intents: Message Content / Server Members / Moderation（あれば）</li>
-                    <li>招待時の権限: Manage Messages, Kick, Ban, Moderate Members, Manage Roles, View Audit Log など</li>
+                    <li>招待時のスコープ: <code class="inline">bot</code> と <code class="inline">applications.commands</code>。権限: Manage Messages, Kick, Ban, Moderate Members, Manage Roles, View Audit Log など</li>
                 </ol>
             </div>
         </section>
@@ -70,7 +70,8 @@ admin_ids:
             <div class="container">
                 <h2>4. 起動</h2>
                 <pre>python main.py</pre>
-                <p>トラブル時は、BOT権限・Intent・監視チャンネルID・ロール階層（キック／BAN対象より上か）を確認してください。</p>
+                <p>起動時にスラッシュコマンドが同期されます。招待に <code class="inline">applications.commands</code> が含まれていれば、<code class="inline">!!!</code> と <code class="inline">/</code> の両方が使えます。</p>
+                <p>トラブル時は、BOT権限・Intent・監視チャンネルID・ロール階層（KICK／BAN対象より上か）を確認してください。</p>
             </div>
         </section>
     </main>

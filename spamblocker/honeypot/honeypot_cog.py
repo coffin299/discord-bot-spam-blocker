@@ -11,6 +11,7 @@ import discord
 from discord.ext import commands
 
 from spamblocker.common.config import ensure_data_dir, id_set, load_config
+from spamblocker.common.logging_util import send_mod_log
 
 # ストライク永続ファイル名
 STRIKES_FILE = os.path.join("data", "honeypot_strikes.json")
@@ -125,25 +126,13 @@ class HoneypotCog(commands.Cog):
 
     async def _log(self, guild: discord.Guild, text: str) -> None:
         """ログチャンネルへ通知する。"""
-        # ハニーポット専用、なければnukeのログを使う
-        channel_id = self._hp().get("log_channel_id")
-        if not channel_id:
-            nuke = self.config.get("nuke") or {}
-            channel_id = nuke.get("log_channel_id")
-        # 未設定ならコンソールのみ
-        if not channel_id:
-            print(text)
-            return
-        # チャンネルを取得する
-        channel = guild.get_channel(int(channel_id))
-        if channel is None:
-            print(text)
-            return
-        try:
-            await channel.send(text)
-        except discord.HTTPException as e:
-            print(f"ハニーポットログ失敗: {e}")
-            print(text)
+        # 個別 → 全体 mod_log の順
+        await send_mod_log(
+            guild,
+            self.config,
+            text,
+            override_channel_id=self._hp().get("log_channel_id"),
+        )
 
     async def _purge_user_messages(
         self,
@@ -189,7 +178,7 @@ class HoneypotCog(commands.Cog):
         if action == "ban":
             await member.ban(reason=reason, delete_message_seconds=0)
             return "BAN"
-        # キックモード: 許容回数を超えたらBAN
+        # KICKモード: 許容回数を超えたらBAN
         max_kick = int(self._hp().get("max_kick_before_ban", 3))
         if count > max_kick:
             ban_reason = f"{reason} (再加入超過: {count}回)"

@@ -14,6 +14,7 @@ import discord
 from discord.ext import commands
 
 from spamblocker.common.config import ensure_data_dir, id_set, load_config
+from spamblocker.common.logging_util import send_mod_log
 
 # ロックダウン状態の永続ファイル
 LOCKDOWN_FILE = os.path.join("data", "lockdown_state.json")
@@ -107,20 +108,13 @@ class NukeCog(commands.Cog):
 
     async def _log(self, guild: discord.Guild, text: str) -> None:
         """ログチャンネルまたはコンソールへ出す。"""
-        # チャンネルIDを取る
-        channel_id = self._nuke().get("log_channel_id")
-        if not channel_id:
-            print(text)
-            return
-        channel = guild.get_channel(int(channel_id))
-        if channel is None:
-            print(text)
-            return
-        try:
-            await channel.send(text)
-        except discord.HTTPException as e:
-            print(f"ニュークログ失敗: {e}")
-            print(text)
+        # 個別 → 全体 mod_log の順
+        await send_mod_log(
+            guild,
+            self.config,
+            text,
+            override_channel_id=self._nuke().get("log_channel_id"),
+        )
 
     async def _dm_admins(self, guild: discord.Guild, content: str) -> None:
         """admin_idsへDMする。失敗はログへフォールバック。"""
@@ -321,11 +315,11 @@ class NukeCog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member) -> None:
-        """キック疑いを検知する（退出全般なので緩めに扱う）。"""
+        """KICK疑いを検知する（退出全般なので緩めに扱う）。"""
         # 自BOT退出は無視
         if member.id == self.bot.user.id:
             return
-        # 監査ログで直近キックがあるときだけカウントする
+        # 監査ログで直近KICKがあるときだけカウントする
         me = member.guild.me
         if me is None or not me.guild_permissions.view_audit_log:
             return
@@ -334,7 +328,7 @@ class NukeCog(commands.Cog):
                 limit=1,
                 action=discord.AuditLogAction.kick,
             ):
-                # 対象が一致し、数秒以内ならキック扱い
+                # 対象が一致し、数秒以内ならKICK扱い
                 if entry.target and entry.target.id == member.id:
                     if (discord.utils.utcnow() - entry.created_at).total_seconds() < 20:
                         count = self._record(member.guild.id, "kick")
@@ -406,8 +400,8 @@ class NukeCog(commands.Cog):
             self._threshold("max_webhooks", 3),
         )
 
-    @commands.command(name="lockdown")
-    async def lockdown_cmd(self, ctx: commands.Context) -> None:
+@commands.hybrid_command(name="lockdown")
+async def lockdown_cmd(self, ctx: commands.Context) -> None:
         """手動で緊急ロックダウンする（admin_idsのみ）。"""
         # ギルド必須
         if not ctx.guild:
@@ -428,8 +422,8 @@ class NukeCog(commands.Cog):
         if ok:
             await ctx.send("🔒 ロックダウンを開始しました")
 
-    @commands.command(name="unlock_lockdown")
-    async def unlock_lockdown_cmd(self, ctx: commands.Context) -> None:
+@commands.hybrid_command(name="unlock_lockdown")
+async def unlock_lockdown_cmd(self, ctx: commands.Context) -> None:
         """ロックダウンを解除する（admin_idsのみ）。"""
         # ギルド必須
         if not ctx.guild:
@@ -445,8 +439,8 @@ class NukeCog(commands.Cog):
         else:
             await ctx.send("⚠️ ロックダウン中ではありません")
 
-    @commands.command(name="nuke_status")
-    async def nuke_status_cmd(self, ctx: commands.Context) -> None:
+@commands.hybrid_command(name="nuke_status")
+async def nuke_status_cmd(self, ctx: commands.Context) -> None:
         """ニューク／ロックダウン状態を表示する。"""
         # ギルド必須
         if not ctx.guild:

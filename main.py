@@ -82,12 +82,33 @@ def setup_error_handler(bot: commands.Bot) -> None:
         await ctx.send(f"❌ エラーが発生しました: {error}")
         print(f"Error: {error}")
 
+    @bot.tree.error
+    async def on_app_command_error(
+        interaction: discord.Interaction,
+        error: Exception,
+    ) -> None:
+        """スラッシュコマンドのエラーを返す。"""
+        # 表示用メッセージを用意する
+        message = f"❌ エラーが発生しました: {error}"
+        if isinstance(error, commands.MissingPermissions):
+            message = "❌ このコマンドを実行する権限がありません"
+        elif isinstance(error, commands.MissingRequiredArgument):
+            message = f"❌ 必要な引数が不足しています: {error.param.name}"
+        # 未応答なら初回応答、済みならフォローアップ
+        try:
+            if interaction.response.is_done():
+                await interaction.followup.send(message, ephemeral=True)
+            else:
+                await interaction.response.send_message(message, ephemeral=True)
+        except discord.HTTPException:
+            print(f"App command error: {error}")
+
 
 # Gateway Intents（メッセージ・メンバー・モデレーション）
 intents = discord.Intents.default()
 # メッセージ本文を読む
 intents.message_content = True
-# 参加・キック検知用
+# 参加・KICK検知用
 intents.members = True
 # ギルドイベント用
 intents.guilds = True
@@ -95,13 +116,16 @@ intents.guilds = True
 if hasattr(discord.Intents, "moderation"):
     intents.moderation = True
 
-# プレフィックス付きBotを作る
+# プレフィックス＋スラッシュのハイブリッドBot
 bot = commands.Bot(command_prefix="!!!", intents=intents)
+# スラッシュ同期を再接続で重複させないフラグ
+_slash_synced = False
 
 
 @bot.event
 async def on_ready() -> None:
-    """起動完了時のログとプレゼンス設定。"""
+    """起動完了時のログ・プレゼンス・スラッシュ同期。"""
+    global _slash_synced
     # 起動バナーを出す
     print("=" * 50)
     print(f"🤖 {bot.user} でログインしました")
@@ -112,6 +136,14 @@ async def on_ready() -> None:
     await bot.change_presence(
         activity=discord.Game(name="spam/nuke blocker"),
     )
+    # スラッシュコマンドをDiscordへ登録する（初回のみ）
+    if not _slash_synced:
+        try:
+            synced = await bot.tree.sync()
+            print(f"✅ スラッシュコマンドを同期しました ({len(synced)} 件)")
+            _slash_synced = True
+        except Exception as e:
+            print(f"❌ スラッシュ同期に失敗しました: {e}")
 
 
 # エラーハンドラをセットする

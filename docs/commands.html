@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>コマンド — Discord Spam Blocker</title>
-    <meta name="description" content="管理コマンドとロックダウン操作の一覧。">
+    <meta name="description" content="プレフィックスとスラッシュ両対応の管理コマンド一覧。">
     <link rel="canonical" href="https://coffin299.github.io/discord-bot-spam-blocker/commands.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,48 +29,58 @@
         <section class="page-hero">
             <div class="container">
                 <h1>コマンド</h1>
-                <p>プレフィックスは <code class="inline">!!!</code> です。</p>
+                <p>すべての管理コマンドはハイブリッドです。プレフィックス <code class="inline">!!!</code> とスラッシュ <code class="inline">/</code> のどちらでも同じ操作ができます。招待時は <code class="inline">applications.commands</code> スコープが必要です。</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>使い方</h2>
+                <p class="sub">例: BOT を許可リストに追加する場合。</p>
+                <pre>!!!add_bot 123456789012345678
+/add_bot bot_id:123456789012345678</pre>
+                <div class="note">スラッシュが一覧に出ないときは、BOTを再起動し、数分待つかクライアントを再起動してください。</div>
             </div>
         </section>
 
         <section class="section">
             <div class="container">
                 <h2>Discord 管理者向け</h2>
-                <p class="sub">サーバーの管理者権限が必要です。</p>
+                <p class="sub">サーバーの管理者権限が必要です。下はプレフィックス表記です。スラッシュでも同名で呼べます。</p>
 
                 <div class="cmd-block">
                     <h3>BOT許可リスト</h3>
                     <ul>
-                        <li><code class="inline">!!!add_bot &lt;BOT_ID&gt;</code> — 許可リストへ追加</li>
-                        <li><code class="inline">!!!remove_bot &lt;BOT_ID&gt;</code> — 削除</li>
-                        <li><code class="inline">!!!list_bots</code> — 一覧（空＝全BOT許可）</li>
+                        <li><code class="inline">!!!add_bot</code> / <code class="inline">/add_bot</code> — 許可リストへ追加</li>
+                        <li><code class="inline">!!!remove_bot</code> / <code class="inline">/remove_bot</code> — 削除</li>
+                        <li><code class="inline">!!!list_bots</code> / <code class="inline">/list_bots</code> — 一覧（空＝全BOT許可）</li>
                     </ul>
                 </div>
 
                 <div class="cmd-block">
                     <h3>監視チャンネル</h3>
                     <ul>
-                        <li><code class="inline">!!!add_channel &lt;CHANNEL_ID&gt;</code></li>
-                        <li><code class="inline">!!!remove_channel &lt;CHANNEL_ID&gt;</code></li>
-                        <li><code class="inline">!!!list_channels</code></li>
+                        <li><code class="inline">!!!add_channel</code> / <code class="inline">/add_channel</code></li>
+                        <li><code class="inline">!!!remove_channel</code> / <code class="inline">/remove_channel</code></li>
+                        <li><code class="inline">!!!list_channels</code> / <code class="inline">/list_channels</code></li>
                     </ul>
                 </div>
 
                 <div class="cmd-block">
                     <h3>NGワード</h3>
                     <ul>
-                        <li><code class="inline">!!!add_keyword &lt;単語&gt;</code></li>
-                        <li><code class="inline">!!!remove_keyword &lt;単語&gt;</code></li>
-                        <li><code class="inline">!!!list_keywords</code></li>
+                        <li><code class="inline">!!!add_keyword</code> / <code class="inline">/add_keyword</code></li>
+                        <li><code class="inline">!!!remove_keyword</code> / <code class="inline">/remove_keyword</code></li>
+                        <li><code class="inline">!!!list_keywords</code> / <code class="inline">/list_keywords</code></li>
                     </ul>
                 </div>
 
                 <div class="cmd-block">
                     <h3>その他</h3>
                     <ul>
-                        <li><code class="inline">!!!add_guild &lt;GUILD_ID&gt;</code> — 監視サーバー追加</li>
-                        <li><code class="inline">!!!reload_config</code> — 設定再読込</li>
-                        <li><code class="inline">!!!status</code> — 主要スイッチの状態</li>
+                        <li><code class="inline">!!!add_guild</code> / <code class="inline">/add_guild</code> — 監視サーバー追加</li>
+                        <li><code class="inline">!!!reload_config</code> / <code class="inline">/reload_config</code> — 設定再読込</li>
+                        <li><code class="inline">!!!status</code> / <code class="inline">/status</code> — 主要スイッチの状態</li>
                     </ul>
                 </div>
             </div>
@@ -82,9 +92,9 @@
                 <p class="sub">config の <code class="inline">admin_ids</code> に書いたユーザーだけが使えます。<code class="inline">nuke_lockdown_enabled: true</code> が必要です。</p>
                 <div class="cmd-block">
                     <ul>
-                        <li><code class="inline">!!!lockdown</code> — 緊急ロックダウン開始</li>
-                        <li><code class="inline">!!!unlock_lockdown</code> — 解除</li>
-                        <li><code class="inline">!!!nuke_status</code> — 検知件数とロックダウン状態</li>
+                        <li><code class="inline">!!!lockdown</code> / <code class="inline">/lockdown</code> — 緊急ロックダウン開始</li>
+                        <li><code class="inline">!!!unlock_lockdown</code> / <code class="inline">/unlock_lockdown</code> — 解除</li>
+                        <li><code class="inline">!!!nuke_status</code> / <code class="inline">/nuke_status</code> — 検知件数とロックダウン状態</li>
                     </ul>
                 </div>
                 <div class="note">ロックダウン完了後、admin_ids へDMが送られます（相手のDM設定次第）。失敗時はログチャンネルへ出ます。</div>

@@ -6,6 +6,10 @@
 # Discord Developer Portal で発行したBOTトークン（必須）
 bot_token: "YOUR_BOT_TOKEN_HERE"
 
+# 削除・KICK・BAN・ハニーポット・アンチニューク等のログ送信先チャンネルID
+# null の場合はコンソール出力のみ。honeypot/nuke 個別の log_channel_id があればそちら優先
+mod_log_channel_id: null
+
 # ------------------------------------------------------------
 # 機能スイッチ（true/false）
 # token 直下にまとめている。各スイッチの意味は直上コメントを参照。
@@ -17,7 +21,7 @@ enable_spam_filter: true
 # 許可リスト外のBOT投稿をすべて削除する（allowed_bots が空のときは無効＝全BOT許可）
 block_all_unauthorized_bots: true
 
-# allowed_bots が空でないとき、リスト外BOTがサーバーに参加したらキックする
+# allowed_bots が空でないとき、リスト外BOTがサーバーに参加したらKICKする
 kick_unauthorized_bots_on_join: true
 
 # 未許可BOTの埋め込み付き投稿を削除する（block_all_unauthorized_bots が false のとき主に効く）
@@ -50,7 +54,7 @@ honeypot_enabled: false
 # ハニーポット作動時、対象ユーザーの既存メッセージを可能な範囲で削除する
 honeypot_purge_user_messages: true
 
-# アンチニューク（大量キック/バン等の検知と隔離）の有効/無効
+# アンチニューク（大量KICK/BAN等の検知と隔離）の有効/無効
 nuke_enabled: true
 
 # 緊急ロックダウン機能そのものの ON/OFF。既定 false（検知・隔離は nuke_enabled 側）
@@ -72,7 +76,7 @@ admin_ids:
   - "YOUR_ADMIN_USER_ID"
 
 # 許可するBOTのユーザーID一覧
-# 空リスト [] の場合は「すべてのBOTを許可」（投稿削除・参加キックをしない）
+# 空リスト [] の場合は「すべてのBOTを許可」（投稿削除・参加KICKをしない）
 # IDを1件以上入れるとホワイトリスト運用になり、リスト外BOTを制限する
 allowed_bots: []
 
@@ -240,7 +244,7 @@ honeypot:
   max_kick_before_ban: 3
   # ストライクをリセットする日数。null なら永続
   strike_reset_days: null
-  # ログチャンネルID。null なら nuke.log_channel_id を流用
+  # ログチャンネルID。null ならトップの mod_log_channel_id を使う
   log_channel_id: null
 
 # ------------------------------------------------------------
@@ -248,13 +252,13 @@ honeypot:
 # 上の nuke_* スイッチと併用
 # ------------------------------------------------------------
 nuke:
-  # 検知ログの送信先チャンネルID。null ならコンソールのみ
+  # 検知ログの送信先。null ならトップの mod_log_channel_id を使う
   log_channel_id: null
   # スライディングウィンドウ秒数（この秒数内の件数で閾値判定）
   window_seconds: 10
   # ウィンドウ内のBAN上限（以上で隔離）
   max_bans: 3
-  # ウィンドウ内のキック上限
+  # ウィンドウ内のKICK上限
   max_kicks: 3
   # ウィンドウ内のチャンネル削除上限
   max_channel_deletes: 3

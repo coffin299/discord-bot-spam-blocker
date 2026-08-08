@@ -7,8 +7,9 @@ Discord サーバー向けのスパム対策・ハニーポット・アンチニ
 - 許可リストに基づく BOT 投稿制御（リスト空＝全 BOT 許可）
 - 招待リンク・疑わしい URL・NG ワードなどのスパム検知
 - ハニーポット（罠チャンネル → KICK 既定、再加入超過で BAN）
-- アンチニューク（短時間の大量キック／バン等を検知して隔離）
+- アンチニューク（短時間の大量KICK／BAN等を検知して隔離）
 - 緊急ロックダウン（`nuke_lockdown_enabled: true` のときのみ、`admin_ids` が操作）
+- モデレーションログ（`mod_log_channel_id` へ削除・KICK・BAN等を送信）
 
 ## セットアップ
 
@@ -33,7 +34,7 @@ pip install -r requirements.txt
    - MESSAGE CONTENT INTENT
    - SERVER MEMBERS INTENT
    - MODERATION INTENT（利用可能な場合）
-3. OAuth2 で招待。推奨権限:
+3. OAuth2 で招待。スコープは `bot` と `applications.commands`。推奨権限:
    - Manage Messages / Kick Members / Ban Members
    - Moderate Members（タイムアウト）
    - Manage Roles / Manage Channels（ロックダウン用）
@@ -47,18 +48,17 @@ python main.py
 
 初回起動で `config.yaml` が生成されます。`bot_token` と `admin_ids` を編集してください。
 
-## 主な管理コマンド（プレフィックス `!!!`）
+## 主な管理コマンド
+
+プレフィックス `!!!` と **スラッシュコマンド**（`/add_bot` など）の両方が使えます。招待時に `applications.commands` スコープを含めてください。
 
 管理者権限（Discord）:
 
-- `!!!add_bot` / `!!!remove_bot` / `!!!list_bots`
-- `!!!add_channel` / `!!!remove_channel` / `!!!list_channels`
-- `!!!add_keyword` / `!!!remove_keyword` / `!!!list_keywords`
-- `!!!reload_config` / `!!!status`
+- `!!!add_bot` / `/add_bot` など（BOT・チャンネル・NGワード・`reload_config`・`status`）
 
 `admin_ids` のみ:
 
-- `!!!lockdown` / `!!!unlock_lockdown` / `!!!nuke_status`
+- `!!!lockdown` / `/lockdown`、`!!!unlock_lockdown` / `/unlock_lockdown`、`!!!nuke_status` / `/nuke_status`
 
 ## ファイル構成
 

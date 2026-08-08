@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 
 from spamblocker.common.config import id_set, load_config, save_config
+from spamblocker.common.logging_util import send_mod_log
 
 # 疑わしいリンク照合時にスキップする公式系ホスト
 SAFE_LINK_HOSTS = (
@@ -231,11 +232,14 @@ class SpamBlockerCog(commands.Cog):
             # 権限不足等はログに残す
             print(f"削除失敗: {e}")
             return
-        # コンソールに記録する
-        print(
-            f"削除: {reason} {message.author} "
-            f"(ID: {message.author.id}) ch={message.channel.id}"
+        # コンソールとモデレーションログへ記録する
+        log_text = (
+            f"🗑️ 削除: {reason} — {message.author} "
+            f"(`{message.author.id}`) ch=<#{message.channel.id}>"
         )
+        print(log_text)
+        if message.guild:
+            await send_mod_log(message.guild, self.config, log_text)
         # 警告が無効ならここで終了する
         if not self.config.get("send_warning", False):
             return
@@ -293,38 +297,43 @@ class SpamBlockerCog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member) -> None:
-        """未許可BOTの参加をキックする。"""
+        """未許可BOTの参加をKICKする。"""
         # BOT以外は対象外
         if not member.bot:
             return
         # 機能が無効なら何もしない
         if not self.config.get("kick_unauthorized_bots_on_join", True):
             return
-        # 全BOT許可モードならキックしない
+        # 全BOT許可モードならKICKしない
         if self._allowed_bots_empty():
             return
         # 許可リスト内なら何もしない
         if self._is_allowed_bot(member):
             return
-        # 自BOTはキックしない
+        # 自BOTはKICKしない
         if member.id == self.bot.user.id:
             return
         try:
-            # 未許可BOTをキックする
+            # 未許可BOTをKICKする
             await member.kick(reason="未許可BOTの参加を拒否")
-            print(f"未許可BOTをキック: {member} ({member.id})")
+            log_text = f"👢 未許可BOTをKICK: {member} (`{member.id}`)"
+            print(log_text)
+            await send_mod_log(member.guild, self.config, log_text)
         except discord.HTTPException as e:
             # ロール階層不足等をログする
-            print(f"未許可BOTキック失敗: {e}")
+            fail = f"未許可BOT KICK失敗: {e}"
+            print(fail)
+            await send_mod_log(member.guild, self.config, fail)
 
     def _persist(self) -> None:
         """現在の設定を保存する。"""
         # YAMLへ書き戻す
         save_config(self.config)
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def reload_config(self, ctx: commands.Context) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def reload_config(self, ctx: commands.Context) -> None:
         """設定ファイルを再読み込みする。"""
         try:
             # 全Cogへも反映したいのでイベント的に再読込する
@@ -339,9 +348,10 @@ class SpamBlockerCog(commands.Cog):
         except Exception as e:
             await ctx.send(f"❌ エラー: {e}")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def add_guild(self, ctx: commands.Context, guild_id: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def add_guild(self, ctx: commands.Context, guild_id: str) -> None:
         """監視対象サーバーを追加する。"""
         # リストを取得する
         monitored = list(self.config.get("monitored_guilds") or [])
@@ -354,9 +364,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ サーバー ID `{guild_id}` は既に監視対象です")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def list_bots(self, ctx: commands.Context) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def list_bots(self, ctx: commands.Context) -> None:
         """許可BOT一覧を表示する。"""
         # 空なら全許可である旨を出す
         bots = self.config.get("allowed_bots") or []
@@ -371,9 +382,10 @@ class SpamBlockerCog(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def add_bot(self, ctx: commands.Context, bot_id: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def add_bot(self, ctx: commands.Context, bot_id: str) -> None:
         """許可BOTを追加する。"""
         # リストを用意する
         bots = list(self.config.get("allowed_bots") or [])
@@ -385,9 +397,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ BOT ID `{bot_id}` は既に許可リストに含まれています")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def remove_bot(self, ctx: commands.Context, bot_id: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def remove_bot(self, ctx: commands.Context, bot_id: str) -> None:
         """許可BOTを削除する。"""
         bots = list(self.config.get("allowed_bots") or [])
         if bot_id in bots:
@@ -398,9 +411,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ BOT ID `{bot_id}` は許可リストに含まれていません")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def add_channel(self, ctx: commands.Context, channel_id: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def add_channel(self, ctx: commands.Context, channel_id: str) -> None:
         """監視チャンネルを追加する。"""
         channels = list(self.config.get("monitored_channels") or [])
         if channel_id not in channels:
@@ -411,9 +425,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ チャンネル ID `{channel_id}` は既に監視対象です")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def remove_channel(self, ctx: commands.Context, channel_id: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def remove_channel(self, ctx: commands.Context, channel_id: str) -> None:
         """監視チャンネルを削除する。"""
         channels = list(self.config.get("monitored_channels") or [])
         if channel_id in channels:
@@ -424,9 +439,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ チャンネル ID `{channel_id}` は監視対象にありません")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def list_channels(self, ctx: commands.Context) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def list_channels(self, ctx: commands.Context) -> None:
         """監視チャンネル一覧を表示する。"""
         channels = self.config.get("monitored_channels") or []
         if not channels:
@@ -440,9 +456,10 @@ class SpamBlockerCog(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def add_keyword(self, ctx: commands.Context, *, keyword: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def add_keyword(self, ctx: commands.Context, *, keyword: str) -> None:
         """NGワードを追加する。"""
         words = list(self.config.get("custom_blocked_words") or [])
         if keyword not in words:
@@ -453,9 +470,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ キーワード `{keyword}` は既に登録されています")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def remove_keyword(self, ctx: commands.Context, *, keyword: str) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def remove_keyword(self, ctx: commands.Context, *, keyword: str) -> None:
         """NGワードを削除する。"""
         words = list(self.config.get("custom_blocked_words") or [])
         if keyword in words:
@@ -466,9 +484,10 @@ class SpamBlockerCog(commands.Cog):
         else:
             await ctx.send(f"⚠️ キーワード `{keyword}` は登録されていません")
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def list_keywords(self, ctx: commands.Context) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def list_keywords(self, ctx: commands.Context) -> None:
         """NGワード一覧を表示する。"""
         words = self.config.get("custom_blocked_words") or []
         if words:
@@ -482,9 +501,10 @@ class SpamBlockerCog(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def status(self, ctx: commands.Context) -> None:
+@commands.hybrid_command()
+@commands.has_permissions(administrator=True)
+@discord.app_commands.default_permissions(administrator=True)
+async def status(self, ctx: commands.Context) -> None:
         """主要設定の状態を表示する。"""
         # トップレベルスイッチを表示する
         lines = [

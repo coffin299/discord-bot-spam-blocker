@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 await navigator.clipboard.writeText(block.innerText);
                 const prev = block.dataset.label || "";
                 block.dataset.label = prev;
-                block.style.outline = "2px solid #0f6b5c";
+                block.style.outline = "2px solid var(--accent)";
                 setTimeout(() => {
                     block.style.outline = "";
                 }, 800);

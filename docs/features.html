@@ -29,7 +29,7 @@
         <section class="page-hero">
             <div class="container">
                 <h1>機能</h1>
-                <p>実装されている保護機能の概要です。音楽再生やLLM機能はありません。</p>
+                <p>実装されている保護機能の概要です。</p>
             </div>
         </section>
 
@@ -40,7 +40,7 @@
                 <ul class="feature-list">
                     <li>
                         <h3>BOT許可リスト</h3>
-                        <p><code class="inline">allowed_bots</code> が空なら全BOT許可。IDがあるときだけリスト外を削除／参加キックします。</p>
+                        <p><code class="inline">allowed_bots</code> が空なら全BOT許可。IDがあるときだけリスト外を削除／参加KICKします。</p>
                     </li>
                     <li>
                         <h3>リンク・招待・NGワード</h3>
@@ -90,7 +90,7 @@
                 <ul class="feature-list">
                     <li>
                         <h3>検知対象</h3>
-                        <p>大量BAN／キック、チャンネル作成・削除、ロール削除、Webhook更新。</p>
+                        <p>大量BAN／KICK、チャンネル作成・削除、ロール削除、Webhook更新。</p>
                     </li>
                     <li>
                         <h3>隔離</h3>
@@ -106,6 +106,31 @@
                     </li>
                 </ul>
                 <div class="note">ロックダウンは強力です。本番ではテスト後に有効化してください。既定はオフです。</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>ハイブリッドコマンド</h2>
+                <p class="sub">同じ操作をプレフィックスとスラッシュのどちらからでも実行できます。</p>
+                <ul class="feature-list">
+                    <li>
+                        <h3>プレフィックス</h3>
+                        <p><code class="inline">!!!add_bot</code> のように <code class="inline">!!!</code> 付きで実行します。</p>
+                    </li>
+                    <li>
+                        <h3>スラッシュ</h3>
+                        <p><code class="inline">/add_bot</code> のように Discord のスラッシュ UI から実行します。</p>
+                    </li>
+                    <li>
+                        <h3>招待スコープ</h3>
+                        <p>スラッシュを使うには OAuth2 で <code class="inline">applications.commands</code> を含めて招待してください。</p>
+                    </li>
+                    <li>
+                        <h3>反映タイミング</h3>
+                        <p>BOT起動時にコマンドを同期します。初回は Discord 側の反映に数分かかることがあります。</p>
+                    </li>
+                </ul>
             </div>
         </section>
     </main>
